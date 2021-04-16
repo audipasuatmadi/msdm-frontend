@@ -43,7 +43,7 @@ export default function App() {
             </IconButton>
             {
               drawerOpen?
-                <Hidden mdDown><Typography variant='h6'>{currentRoute}</Typography></Hidden>
+                <Hidden xsDown><Typography variant='h6'>{currentRoute}</Typography></Hidden>
               :
                 <Typography variant='h6'>{currentRoute}</Typography>
             }
@@ -72,6 +72,7 @@ export default function App() {
                     setCurrentRoute(name);
                   }}
                   to={route}
+                  selected={currentRoute === name}
                 >
                   <ListItemText>{name}</ListItemText>
                   <ListItemIcon>
