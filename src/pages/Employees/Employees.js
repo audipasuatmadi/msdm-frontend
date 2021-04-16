@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import Axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { useStyles } from './Employees.styles';
@@ -72,6 +72,7 @@ export default function Employees() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [dialogOpened, setDialogOpened] = useState(false);
+  const [refresh, setRefresh] = useState(1);
 
   
   const classes = useStyles();
@@ -81,6 +82,34 @@ export default function Employees() {
   
   const [selectedRole, setSelectedRole] = useState(0)
   const [selectedDepartment, setSelectedDepartment] = useState(0)
+
+  const [nama, setNama] = useState();
+  const [gaji, setGaji] = useState();
+  const [jamKerja, setJamKerja] = useState(1);
+
+  const handleInput = (inputSetter) => (e) => inputSetter(e.target.value);
+  const handleNewEmployee = async () => {
+    const shippingData = {
+      name: nama,
+      roleId: selectedRole,
+      workHours: jamKerja,
+      salary: gaji
+    }
+    let damn;
+    try {
+      damn = await Axios.post('http://localhost/msdm-backend/employees.php', {
+          code: 1,
+          ...shippingData
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    if (damn) {
+      setRefresh(refresh + 1);
+    }
+
+    
+  }
 
   useEffect(() => {
     const getDatas = async () => {
@@ -103,7 +132,7 @@ export default function Employees() {
       setData(sanitizedData);
     };
     getDatas();
-  }, []);
+  }, [refresh]);
 
   const handleDelete = (selectedData) => {
     setData(data.filter((data) => data.id != selectedData[0]))
@@ -162,6 +191,7 @@ export default function Employees() {
           handleClose={()=>setDialogOpened(false)}
           title="Daftarkan Karyawan"
           text="Daftarkan karyawan anda dengan cara mengisi form dibawah. Pastikan seluruh form terisi."
+          onTrueClick={handleNewEmployee}
         >
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -170,6 +200,8 @@ export default function Employees() {
                 required
                 fullWidth
                 variant="filled"
+                value={nama}
+                onChange={handleInput(setNama)}
               />
             </Grid>
           </Grid>
@@ -181,6 +213,8 @@ export default function Employees() {
                 variant="filled"
                 type="number"
                 fullWidth
+                value={jamKerja}
+                onChange={handleInput(setJamKerja)}
               />
             </Grid>
             <Grid item xs={6}>    
@@ -190,6 +224,8 @@ export default function Employees() {
                 variant="filled"
                 type="number"
                 fullWidth
+                value={gaji}
+                onChange={handleInput(setGaji)}
               />
             </Grid>
           </Grid>

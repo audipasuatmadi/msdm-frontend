@@ -6,7 +6,12 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 
-export default ({open, handleClose, title, text, children}) => {
+export default ({open, handleClose, title, text, children, onTrueClick}) => {
+  const localHandleTrueClick = () => {
+    handleClose();
+    onTrueClick();
+  }
+
   return (
     <Dialog open={open}>
       <DialogTitle>{title}</DialogTitle>
@@ -15,7 +20,7 @@ export default ({open, handleClose, title, text, children}) => {
         {children}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">Daftarkan</Button>
+        <Button onClick={localHandleTrueClick} color="primary">Daftarkan</Button>
         <Button onClick={handleClose} color="default">Batal</Button>
       </DialogActions>
     </Dialog>
