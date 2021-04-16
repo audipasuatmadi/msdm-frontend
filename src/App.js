@@ -6,13 +6,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
+import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, Switch as RouterSwitch, Route as RouterRoute } from 'react-router-dom';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import routes from './routes';
@@ -85,6 +86,24 @@ export default function App() {
           </List>
         </Drawer>
       </ThemeProvider>
+      
+      <Grid style={{marginTop: '5rem'}} container justify="center">
+        <Grid item xs={0} sm={drawerOpen? 2: 0}/>
+        <Grid  item xs={12} sm={10} md={8}>
+          <RouterSwitch>
+            {
+              routes.map(({route, component}, key) => (
+                <RouterRoute 
+                  key={key}
+                  path={route}
+                  exact
+                  component={component}
+                />
+              ))
+            }
+          </RouterSwitch>
+        </Grid>
+      </Grid>
     </>
   );
 }
