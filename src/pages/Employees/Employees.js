@@ -83,8 +83,8 @@ export default function Employees() {
   const [selectedRole, setSelectedRole] = useState(0)
   const [selectedDepartment, setSelectedDepartment] = useState(0)
 
-  const [nama, setNama] = useState();
-  const [gaji, setGaji] = useState();
+  const [nama, setNama] = useState("");
+  const [gaji, setGaji] = useState(1);
   const [jamKerja, setJamKerja] = useState(1);
 
   const handleInput = (inputSetter) => (e) => inputSetter(e.target.value);
@@ -93,7 +93,8 @@ export default function Employees() {
       name: nama,
       roleId: selectedRole,
       workHours: jamKerja,
-      salary: gaji
+      salary: gaji,
+      departmentId: selectedDepartment
     }
     let damn;
     try {
@@ -105,6 +106,7 @@ export default function Employees() {
       console.log(e)
     }
     if (damn) {
+      console.log(damn)
       setRefresh(refresh + 1);
     }
 
@@ -134,9 +136,29 @@ export default function Employees() {
     getDatas();
   }, [refresh]);
 
-  const handleDelete = (selectedData) => {
+  const handleDelete = async (selectedData) => {
     setData(data.filter((data) => data.id != selectedData[0]))
     setSelected([]);
+    
+    const shippingData = {
+      id: parseInt(selectedData[0])
+    }
+
+    let feedback;
+
+    try {
+      feedback = await Axios.post('http://localhost/msdm-backend/employees.php', {
+          code: 3,
+          ...shippingData
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    if (feedback) {
+      console.log(feedback)
+      setRefresh(refresh + 1);
+    }
+
   }
 
   return (

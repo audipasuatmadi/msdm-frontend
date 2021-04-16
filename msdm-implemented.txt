@@ -1,3 +1,19 @@
-JOIN
-CALC FIELD
-ALIAS
+Wajib:
+* DDL
+- INSERT, UPDATE, DELETE
+- SELECT FROM LIKE
+* SELECT FROM ORDER BY
+* alias
+* Calculating Fields
+- BETWEEN ... AND ...
+- aggregation functions
+- HAVING
+* JOIN
+- UNION
+- IN
+
+Bonus:
+- View
+* Stored Procedure
+- Cursor
+* Trigger
