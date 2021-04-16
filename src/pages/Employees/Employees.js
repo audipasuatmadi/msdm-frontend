@@ -4,6 +4,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { useStyles } from './Employees.styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 import { red } from '@material-ui/core/colors';
@@ -34,7 +35,7 @@ const columns = [
   {
     field: 'nama',
     headerName: 'Nama',
-    // width: 70,
+    width: 150,
   },
   {
     field: 'jam_kerja',
@@ -72,6 +73,7 @@ export default function Employees() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [dialogOpened, setDialogOpened] = useState(false);
+  const [editDialogOpened, setEditDialogOpened] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
   
@@ -83,6 +85,7 @@ export default function Employees() {
   const [selectedRole, setSelectedRole] = useState(0)
   const [selectedDepartment, setSelectedDepartment] = useState(0)
 
+  const [dataId, setDataId] = useState(0);
   const [nama, setNama] = useState("");
   const [gaji, setGaji] = useState(1);
   const [jamKerja, setJamKerja] = useState(1);
@@ -109,8 +112,30 @@ export default function Employees() {
       console.log(damn)
       setRefresh(refresh + 1);
     }
+  }
 
-    
+  const handleEditEmployee = async () => {
+    const shippingData = {
+      id: dataId,
+      name: nama,
+      roleId: selectedRole,
+      workHours: jamKerja,
+      salary: gaji,
+      departmentId: selectedDepartment
+    }
+    let feedback;
+    try {
+      feedback = await Axios.post('http://localhost/msdm-backend/employees.php', {
+          code: 2,
+          ...shippingData
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    if (feedback) {
+      console.log(feedback)
+      setRefresh(refresh + 1);
+    }
   }
 
   useEffect(() => {
@@ -185,13 +210,13 @@ export default function Employees() {
         style={{
           position: 'absolute',
           display: 'flex',
-          flexDirection: 'column-reverse',
+          flexDirection: 'row',
           gap: '1rem',
           bottom: 0,
           right: 0,
         }}
       >
-        {selected.length === 1 && (
+        {selected.length === 1 && (<>
           <ThemeProvider theme={createMuiTheme({ palette: { primary: red } })}>
             <Fab 
               color='primary'
@@ -200,6 +225,25 @@ export default function Employees() {
               <DeleteIcon />
             </Fab>
           </ThemeProvider>
+          <Fab 
+            onClick={()=>{
+              const selectedData = data.filter((data, val) => data.id == selected[0])[0];
+              setDataId(selectedData.id);
+              setNama(selectedData.nama);
+              setGaji(selectedData.gaji);
+              setJamKerja(selectedData.jam_kerja);
+
+              setSelectedRole(0)
+              setSelectedDepartment(0)
+
+              if (selectedData.jabatan_id) setSelectedRole(selectedData.jabatan_id)
+              if (selectedData.departemen_id) setSelectedDepartment(selectedData.departemen_id);
+              setEditDialogOpened(true);
+            }}
+            >
+            <EditIcon />
+          </Fab>
+          </>
         )}
         <Fab 
           className={classes.myfab} color='primary'
@@ -209,11 +253,17 @@ export default function Employees() {
           <AddIcon style={{ color: '#fff' }} />{' '}
         </Fab>
         <FormDialog 
-          open={dialogOpened} 
-          handleClose={()=>setDialogOpened(false)}
+          open={dialogOpened || editDialogOpened} 
+          handleClose={()=>{
+            setDialogOpened(false);
+            setEditDialogOpened(false);
+          }}
           title="Daftarkan Karyawan"
           text="Daftarkan karyawan anda dengan cara mengisi form dibawah. Pastikan seluruh form terisi."
-          onTrueClick={handleNewEmployee}
+          onTrueClick={() => {
+            if (dialogOpened) handleNewEmployee();
+            if (editDialogOpened) handleEditEmployee();
+          }}
         >
           <Grid container spacing={2}>
             <Grid item xs={12}>
