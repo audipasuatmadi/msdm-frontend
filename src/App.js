@@ -13,6 +13,7 @@ import makeStyles from '@material-ui/styles/makeStyles'
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 import {ThemeProvider} from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider';
+import { Link as RouterLink } from 'react-router-dom'
 
 import MenuIcon from '@material-ui/icons/Menu'
 import PeopleIcon from '@material-ui/icons/People'
@@ -47,33 +48,40 @@ const drawerTheme = createMuiTheme({
 const routes = [
   {
     name: "Dashbor",
-    icon: DashboardIcon
+    icon: DashboardIcon,
+    route: "/"
   },
   {
     name: "Stakeholders",
-    icon: AssignmentIndIcon
+    icon: AssignmentIndIcon,
+    route: "/stakeholders"
   },
   {
     name: "Karyawan",
     icon: PeopleIcon,
-    divider: true
+    divider: true,
+    route: "/employees"
   },
   {
     name: "Departemen",
-    icon: AccountBalance
+    icon: AccountBalance,
+    route: "/departments"
   },
   {
     name: "Jabatan",
-    icon: LockIcon
+    icon: LockIcon,
+    route: "/roles"
   },
   {
     name: "Investor",
-    icon: MonetizationOnIcon
+    icon: MonetizationOnIcon,
+    route: "/investors"
   },
   {
     name: "Tentang Kami",
     icon: EmojiEmotionsIcon,
-    divider: true
+    divider: true,
+    route: "/about"
   },
 ]
 
@@ -112,10 +120,10 @@ export default function App() {
           className={classes.drawerItems}
         >
           {
-            routes.map(({name, icon: Icon, divider}, key) => (
+            routes.map(({name, icon: Icon, divider, route}, key) => (
               <>
                 {divider && <Divider />}
-                <ListItem button key={key}>
+                <ListItem button key={key} component={RouterLink} to={route}>
                   <ListItemText>{name}</ListItemText>
                   <ListItemIcon><Icon /></ListItemIcon>
                 </ListItem>
