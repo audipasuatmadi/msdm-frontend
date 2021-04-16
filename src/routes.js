@@ -5,6 +5,7 @@ import LockIcon from '@material-ui/icons/Lock'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+import Employees from './pages/Employees/Employees';
 
 export default [
   {
@@ -21,7 +22,8 @@ export default [
     name: "Karyawan",
     icon: PeopleIcon,
     divider: true,
-    route: "/employees"
+    route: "/employees",
+    component: Employees
   },
   {
     name: "Departemen",
