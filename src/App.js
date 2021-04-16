@@ -87,6 +87,8 @@ const routes = [
 
 export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [currentRoute, setCurrentRoute] = useState("Dashbor")
+
   const classes = useStyles({
     isDrawerOpen: drawerOpen
   });
@@ -102,7 +104,7 @@ export default function App() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6">
-              Manajemen Sumber Daya Manusia
+              {currentRoute}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -123,7 +125,7 @@ export default function App() {
             routes.map(({name, icon: Icon, divider, route}, key) => (
               <>
                 {divider && <Divider />}
-                <ListItem button key={key} component={RouterLink} to={route}>
+                <ListItem button key={key} component={RouterLink} onClick={() => {setCurrentRoute(name)}} to={route}>
                   <ListItemText>{name}</ListItemText>
                   <ListItemIcon><Icon /></ListItemIcon>
                 </ListItem>
