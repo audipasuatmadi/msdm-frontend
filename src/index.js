@@ -1,24 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import tinycolor2 from 'tinycolor2'
-import green from '@material-ui/core/colors/green'
-
+import green from '@material-ui/core/colors/green';
 
 const theme = createMuiTheme({
   palette: {
-    primary: green
+    primary: green,
   },
   overrides: {
     MuiButton: {
       containedPrimary: {
-        color: "#fff"
-      }
-    }
-  }
-})
+        color: '#fff',
+      },
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,7 +25,6 @@ ReactDOM.render(
         <App />
       </ThemeProvider>
     </BrowserRouter>
-    
   </React.StrictMode>,
   document.getElementById('root')
 );
