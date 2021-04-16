@@ -23,6 +23,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import { useDepartmentData, useRolesData } from './Employees.hook';
+import FormDialog from '../../components/Dialogs/FormDialog';
 
 const columns = [
   {
@@ -67,98 +68,19 @@ const columns = [
   },
 ];
 
-const FormDialog = ({open, handleClose, roles, departments}) => {
-  const [selectedRole, setSelectedRole] = useState(0);
-  const [selectedDepartment, setSelectedDepartment] = useState(0);
-
-  return (
-    <Dialog open={open}>
-      <DialogTitle>Daftarkan Karyawan Baru</DialogTitle>
-      <DialogContent>
-        <DialogContentText>Daftarkan karyawan anda dengan mengisikan form dibawah ini</DialogContentText>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField 
-              label="Nama"
-              required
-              fullWidth
-              variant="filled"
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>    
-            <TextField 
-              label="Jam Kerja"
-              required
-              variant="filled"
-              type="number"
-            />
-          </Grid>
-          <Grid item xs={6}>    
-            <TextField 
-              label="Gaji"
-              required
-              variant="filled"
-              type="number"
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>    
-            <Select
-              value={selectedRole}
-              variant="filled"
-              label="jabatan"
-              fullWidth
-              onChange={(e) => setSelectedRole(e.target.value)}
-            >
-              <MenuItem value={0}><em>Jabatan</em></MenuItem>
-              {
-                roles.map((data, key) => (
-                  <MenuItem key={key} value={data.id}>{data.nama}</MenuItem>
-                ))
-              }
-            </Select>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>    
-            <Select
-              value={selectedDepartment}
-              variant="filled"
-              label="departemen"
-              fullWidth
-              onChange={(e) => setSelectedDepartment(e.target.value)}
-            >
-              <MenuItem value={0}><em>Departemen</em></MenuItem>
-              {
-                departments.map((val, key) => (
-                  <MenuItem key={key} value={val.id}>{val.nama}</MenuItem>
-                ))
-              }
-            </Select>
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">Daftarkan</Button>
-        <Button onClick={handleClose} color="default">Batal</Button>
-      </DialogActions>
-    </Dialog>
-  )
-}
-
 export default function Employees() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
   const [dialogOpened, setDialogOpened] = useState(false);
 
+  
   const classes = useStyles();
-
+  
   const roleData = useRolesData();
   const departmentData = useDepartmentData()
-
+  
+  const [selectedRole, setSelectedRole] = useState(0)
+  const [selectedDepartment, setSelectedDepartment] = useState(0)
 
   useEffect(() => {
     const getDatas = async () => {
@@ -235,7 +157,81 @@ export default function Employees() {
           {' '}
           <AddIcon style={{ color: '#fff' }} />{' '}
         </Fab>
-        <FormDialog departments={departmentData} roles={roleData} open={dialogOpened} handleClose={()=>setDialogOpened(false)} />
+        <FormDialog 
+          open={dialogOpened} 
+          handleClose={()=>setDialogOpened(false)}
+          title="Daftarkan Karyawan"
+          text="Daftarkan karyawan anda dengan cara mengisi form dibawah. Pastikan seluruh form terisi."
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField 
+                label="Nama"
+                required
+                fullWidth
+                variant="filled"
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>    
+              <TextField 
+                label="Jam Kerja"
+                required
+                variant="filled"
+                type="number"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={6}>    
+              <TextField 
+                label="Gaji"
+                required
+                variant="filled"
+                type="number"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>    
+              <Select
+                value={selectedRole}
+                variant="filled"
+                label="jabatan"
+                fullWidth
+                required
+                onChange={(e) => setSelectedRole(e.target.value)}
+              >
+                <MenuItem value={0}><em>Jabatan</em></MenuItem>
+                {
+                  roleData.map((data, key) => (
+                    <MenuItem key={key} value={data.id}>{data.nama}</MenuItem>
+                  ))
+                }
+              </Select>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>    
+              <Select
+                value={selectedDepartment}
+                variant="filled"
+                label="departemen"
+                fullWidth
+                required
+                onChange={(e) => setSelectedDepartment(e.target.value)}
+              >
+                <MenuItem value={0}><em>Departemen</em></MenuItem>
+                {
+                  departmentData.map((val, key) => (
+                    <MenuItem key={key} value={val.id}>{val.nama}</MenuItem>
+                  ))
+                }
+              </Select>
+            </Grid>
+          </Grid>
+        </FormDialog>
       </div>
     </section>
   );
