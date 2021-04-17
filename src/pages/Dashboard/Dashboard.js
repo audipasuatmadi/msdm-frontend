@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -12,15 +12,13 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Bar, Tooltip } from 'recharts';
 import { useJobCountData } from './Dashboard.api';
 
 export default function Dashboard() {
-
-  const [minJob, setMinJob] = useState(0)
+  const [minJob, setMinJob] = useState(0);
   const [inputMinJob, setInputMinJob] = useState(0);
 
   const jobCounts = useJobCountData(minJob);
-  
+
   return (
     <section>
-
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <Card elevation={1}>
@@ -39,7 +37,7 @@ export default function Dashboard() {
                 <Bar dataKey='jml_karyawan' fill='#8884d8' />
               </BarChart>
             </CardContent>
-      
+
             <CardActions>
               <Button color='primary'>Refresh</Button>
             </CardActions>
@@ -63,9 +61,11 @@ export default function Dashboard() {
                 value={inputMinJob}
                 onChange={(e) => setInputMinJob(e.target.value)}
               />
-              <Button 
+              <Button
                 color='primary'
-                onClick={() => {setMinJob(inputMinJob)}}
+                onClick={() => {
+                  setMinJob(inputMinJob);
+                }}
               >
                 Atur
               </Button>
