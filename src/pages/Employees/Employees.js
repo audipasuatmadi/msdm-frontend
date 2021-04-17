@@ -14,7 +14,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
-import { useDepartmentData, useRolesData } from './Employees.hook';
+import { useDepartmentData, useRolesData, useEmployeesData } from './Employees.hook';
 import FormDialog from '../../components/Dialogs/FormDialog';
 import { dataColumns } from './Employees.config';
 
@@ -24,6 +24,8 @@ export default function Employees() {
   const [dialogOpened, setDialogOpened] = useState(false);
   const [editDialogOpened, setEditDialogOpened] = useState(false);
   const [refresh, setRefresh] = useState(1);
+
+  const employeeData = useEmployeesData(refresh);
 
   const classes = useStyles();
 
@@ -92,28 +94,6 @@ export default function Employees() {
     }
   };
 
-  useEffect(() => {
-    const getDatas = async () => {
-      let newDatas;
-      try {
-        newDatas = await Axios.get(
-          'http://localhost/msdm-backend/employees.php',
-          { params: { code: 2 } }
-        );
-      } catch (e) {
-        console.log(e);
-      }
-      if (!newDatas) return;
-      const sanitizedData = newDatas.data.payload.map((data) => {
-        if (data['nama_departemen'] === null) {
-          data['nama_departemen'] = '-';
-        }
-        return data;
-      });
-      setData(sanitizedData);
-    };
-    getDatas();
-  }, [refresh]);
 
   const handleDelete = async (selectedData) => {
     setData(data.filter((data) => data.id !== parseInt(selectedData[0])));
@@ -154,7 +134,7 @@ export default function Employees() {
       >
         <DataGrid
           columns={dataColumns}
-          rows={data}
+          rows={employeeData}
           pageSize={5}
           className={classes.datagrid}
           disableMultipleSelection
