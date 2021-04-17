@@ -47,17 +47,17 @@ export default function Employees() {
       salary: gaji,
       departmentId: selectedDepartment,
     };
-    let damn;
+    let feedback;
     try {
-      damn = await Axios.post('http://localhost/msdm-backend/employees.php', {
+      feedback = await Axios.post('http://localhost/msdm-backend/employees.php', {
         code: 1,
         ...shippingData,
       });
     } catch (e) {
       console.log(e);
     }
-    if (damn) {
-      console.log(damn);
+    if (feedback) {
+      console.log(feedback);
       setRefresh(refresh + 1);
     }
   };
