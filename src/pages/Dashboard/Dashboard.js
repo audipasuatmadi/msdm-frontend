@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -13,7 +13,10 @@ import { useJobCountData } from './Dashboard.api';
 
 export default function Dashboard() {
 
-  const jobCounts = useJobCountData(-1);
+  const [minJob, setMinJob] = useState(0)
+  const [inputMinJob, setInputMinJob] = useState(0);
+
+  const jobCounts = useJobCountData(minJob);
   
   return (
     <section>
@@ -57,8 +60,15 @@ export default function Dashboard() {
                 color='primary'
                 size='small'
                 variant='filled'
+                value={inputMinJob}
+                onChange={(e) => setInputMinJob(e.target.value)}
               />
-              <Button color='primary'>Atur</Button>
+              <Button 
+                color='primary'
+                onClick={() => {setMinJob(inputMinJob)}}
+              >
+                Atur
+              </Button>
             </CardActions>
           </Card>
         </Grid>
