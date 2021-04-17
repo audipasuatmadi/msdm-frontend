@@ -1,23 +1,14 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { useStyles } from './Employees.styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 import { red } from '@material-ui/core/colors';
-import { withTheme, ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-
-import Button from '@material-ui/core/Button';
 
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
@@ -122,7 +113,7 @@ export default function Employees() {
   }, [refresh]);
 
   const handleDelete = async (selectedData) => {
-    setData(data.filter((data) => data.id != selectedData[0]));
+    setData(data.filter((data) => data.id !== parseInt(selectedData[0])));
     setSelected([]);
 
     const shippingData = {
@@ -190,7 +181,7 @@ export default function Employees() {
             <Fab
               onClick={() => {
                 const selectedData = data.filter(
-                  (data, val) => data.id == selected[0]
+                  (data) => data.id === parseInt(selected[0])
                 )[0];
                 setDataId(selectedData.id);
                 setNama(selectedData.nama);

@@ -67,11 +67,10 @@ export default function App() {
           <h1 style={{ textAlign: 'center' }}>MSDM</h1>
           <List className={classes.drawerItems}>
             {routes.map(({ name, icon: Icon, divider, route }, key) => (
-              <>
+              <React.Fragment key={key}>
                 {divider && <Divider />}
                 <ListItem
                   button
-                  key={key}
                   component={RouterLink}
                   onClick={() => {
                     setCurrentRoute(name);
@@ -84,7 +83,7 @@ export default function App() {
                     <Icon />
                   </ListItemIcon>
                 </ListItem>
-              </>
+              </React.Fragment>
             ))}
             <ListItem></ListItem>
           </List>

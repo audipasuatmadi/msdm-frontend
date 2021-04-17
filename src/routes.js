@@ -7,7 +7,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
 
-export default [
+const routes = [
   {
     name: 'Dashbor',
     icon: DashboardIcon,
@@ -47,3 +47,5 @@ export default [
     route: '/about',
   },
 ];
+
+export default routes
