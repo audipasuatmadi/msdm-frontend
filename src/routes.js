@@ -7,6 +7,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Departemen from './pages/Departement/Departement'
 
 const routes = [
   {
@@ -31,6 +32,7 @@ const routes = [
     name: 'Departemen',
     icon: AccountBalance,
     route: '/departments',
+    component : Departemen,
   },
   {
     name: 'Jabatan',

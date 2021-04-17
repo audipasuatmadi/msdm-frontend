@@ -12,6 +12,9 @@ export const useStyles = makeStyles((theme) => ({
   toggleButton: {
     marginLeft: ({ isDrawerOpen }) => (isDrawerOpen ? '230px' : '0px'),
   },
+  root:{
+    backgroundColor : "#fff",
+  }
 }));
 
 export const drawerTheme = createMuiTheme({
