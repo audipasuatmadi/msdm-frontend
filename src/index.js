@@ -10,8 +10,8 @@ const theme = createMuiTheme({
     primary: green,
     background: {
       default: '#f6f7ff',
-      light: "#F3F5FF"
-    }
+      light: '#F3F5FF',
+    },
   },
   overrides: {
     MuiButton: {

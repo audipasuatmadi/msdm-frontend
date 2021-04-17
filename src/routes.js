@@ -1,7 +1,7 @@
-import PeopleIcon from '@material-ui/icons/People'
-import AccountBalance from '@material-ui/icons/AccountBalance'
-import DashboardIcon from '@material-ui/icons/Dashboard'
-import LockIcon from '@material-ui/icons/Lock'
+import PeopleIcon from '@material-ui/icons/People';
+import AccountBalance from '@material-ui/icons/AccountBalance';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import LockIcon from '@material-ui/icons/Lock';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
@@ -9,41 +9,41 @@ import Employees from './pages/Employees/Employees';
 
 export default [
   {
-    name: "Dashbor",
+    name: 'Dashbor',
     icon: DashboardIcon,
-    route: "/"
+    route: '/',
   },
   {
-    name: "Stakeholders",
+    name: 'Stakeholders',
     icon: AssignmentIndIcon,
-    route: "/stakeholders"
+    route: '/stakeholders',
   },
   {
-    name: "Karyawan",
+    name: 'Karyawan',
     icon: PeopleIcon,
     divider: true,
-    route: "/employees",
-    component: Employees
+    route: '/employees',
+    component: Employees,
   },
   {
-    name: "Departemen",
+    name: 'Departemen',
     icon: AccountBalance,
-    route: "/departments"
+    route: '/departments',
   },
   {
-    name: "Jabatan",
+    name: 'Jabatan',
     icon: LockIcon,
-    route: "/roles"
+    route: '/roles',
   },
   {
-    name: "Investor",
+    name: 'Investor',
     icon: MonetizationOnIcon,
-    route: "/investors"
+    route: '/investors',
   },
   {
-    name: "Tentang Kami",
+    name: 'Tentang Kami',
     icon: EmojiEmotionsIcon,
     divider: true,
-    route: "/about"
+    route: '/about',
   },
-]
+];
