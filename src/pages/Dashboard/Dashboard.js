@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -8,31 +8,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { BarChart, CartesianGrid, XAxis, YAxis, Bar, Tooltip, Legend } from 'recharts';
-const data = [
-  {
-    id: 1,
-    name: "sule",
-    count: 20
-  },
-  {
-    id: 2,
-    name: "sulo",
-    count: 2
-  },
-  {
-    id: 3,
-    name: "sheep",
-    count: 12
-  },
-  {
-    id: 3,
-    name: "ojek",
-    count: 3
-  },
-]
+import { BarChart, CartesianGrid, XAxis, YAxis, Bar, Tooltip } from 'recharts';
+import { useJobCountData } from './Dashboard.api';
 
 export default function Dashboard() {
+
+  const jobCounts = useJobCountData(-1);
+  
   return (
     <section>
 
@@ -46,12 +28,12 @@ export default function Dashboard() {
               subheaderTypographyProps={{ variant: 'subtitle2' }}
             />
             <CardContent>
-              <BarChart width={730} height={350} data={data}>
+              <BarChart width={730} height={350} data={jobCounts}>
                 <CartesianGrid strokeDasharray='3 3' />
-                <XAxis dataKey='name' />
+                <XAxis dataKey='nama_jabatan' />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey='count' fill='#8884d8' />
+                <Bar dataKey='jml_karyawan' fill='#8884d8' />
               </BarChart>
             </CardContent>
       
