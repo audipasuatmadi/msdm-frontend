@@ -6,12 +6,14 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const routes = [
   {
     name: 'Dashbor',
     icon: DashboardIcon,
     route: '/',
+    component: Dashboard
   },
   {
     name: 'Stakeholders',
