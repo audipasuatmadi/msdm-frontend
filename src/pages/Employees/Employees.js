@@ -49,10 +49,13 @@ export default function Employees() {
     };
     let feedback;
     try {
-      feedback = await Axios.post('http://localhost/msdm-backend/employees.php', {
-        code: 1,
-        ...shippingData,
-      });
+      feedback = await Axios.post(
+        'http://localhost/msdm-backend/employees.php',
+        {
+          code: 1,
+          ...shippingData,
+        }
+      );
     } catch (e) {
       console.log(e);
     }
