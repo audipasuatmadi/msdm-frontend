@@ -7,6 +7,7 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Investor from './pages/Investors/Investor'
 
 const routes = [
   {
@@ -41,6 +42,7 @@ const routes = [
     name: 'Investor',
     icon: MonetizationOnIcon,
     route: '/investors',
+    component: Investor
   },
   {
     name: 'Tentang Kami',
