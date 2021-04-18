@@ -4,14 +4,9 @@ import Axios from 'axios';
 export const useEmployeesData = (refresh, searchConfig) => {
   const [employeeData, setEmployeeData] = useState([]);
 
-<<<<<<< HEAD
   
-=======
-  const finalSearchConfig = searchConfig
-    ? searchConfig
-    : { params: { code: 2 } };
 
->>>>>>> 3d319e8fd19df219b71a08ecf82a41eecd693bbf
+  
   useEffect(() => {
     const finalSearchConfig = searchConfig
     ? searchConfig
@@ -32,10 +27,6 @@ export const useEmployeesData = (refresh, searchConfig) => {
       setEmployeeData(newDatas.data.payload);
     };
     getDatas();
-<<<<<<< HEAD
-=======
-    console.log('fetching');
->>>>>>> 3d319e8fd19df219b71a08ecf82a41eecd693bbf
   }, [refresh, searchConfig]);
 
   return employeeData;
