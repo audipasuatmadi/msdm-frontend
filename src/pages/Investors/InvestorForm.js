@@ -36,7 +36,11 @@ export default function InvestorForm({
       handleClose={() => handleClose()}
       title='Daftarkan Investor'
       text='Daftarkan Investor anda dengan cara mengisi form dibawah. Pastikan seluruh form terisi.'
-      onTrueClick={onTrueClick}
+      onTrueClick={onTrueClick({
+        id: id,
+        name: nama,
+        stocks: stocks
+      })}
     >
       <Grid container spacing={2}>
         <Grid xs={12}>

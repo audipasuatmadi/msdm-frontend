@@ -12,17 +12,31 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import InvestorForm from './InvestorForm';
+import { addNewInvestor, editInvestor } from './Investor.api';
 
 export default function Investor() {
 
   const [selectedInvestor, setSelectedInvestor] = useState(-1);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [refresh, setRefresh] = useState(0);
   const [updateData, setUpdateData] = useState({});
   const handleCloseEdit = () => {
     setIsEditOpen(false);
   }
+  
 
-  const investorData = useInvestorData();
+  const investorData = useInvestorData(refresh);
+
+  const handleModalClick = ({id, ...formData}) => async () => {
+    formData.stocks = parseInt(formData.stocks);
+    if (id === 0) {
+      await addNewInvestor(formData);
+      setRefresh(refresh + 1);
+    } else {
+      await editInvestor({id, ...formData});
+      setRefresh(refresh + 1);
+    }
+  }
 
   const handleAddInvestor = () => {
     setUpdateData({});
@@ -94,7 +108,7 @@ export default function Investor() {
           isOpen={isEditOpen}
           handleClose={handleCloseEdit}
           updateData={updateData}
-          onTrueClick={() => {}}
+          onTrueClick={handleModalClick}
         />
       </div>
     </section>

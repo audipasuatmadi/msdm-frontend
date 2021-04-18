@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import Axios from 'axios';
 
-export const useInvestorData = () => {
+export const useInvestorData = (refresh) => {
   const [investorData, setInvestorData] = useState([]);
   useEffect(() => {
     const getDatas = async () => {
@@ -23,7 +23,7 @@ export const useInvestorData = () => {
       setInvestorData(newDatas.data);
     };
     getDatas();
-  }, []);
+  }, [refresh]);
 
   return investorData;
 }
