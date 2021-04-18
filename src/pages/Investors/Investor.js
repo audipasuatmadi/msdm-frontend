@@ -17,11 +17,23 @@ export default function Investor() {
 
   const [selectedInvestor, setSelectedInvestor] = useState(-1);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [updateData, setUpdateData] = useState({});
   const handleCloseEdit = () => {
     setIsEditOpen(false);
   }
 
   const investorData = useInvestorData();
+
+  const handleAddInvestor = () => {
+    setUpdateData({});
+    setIsEditOpen(true);
+  }
+
+  const handleUpdateInvestor = () => {
+    const selectedInvestorData = investorData.filter((val) => val.id === selectedInvestor)[0];
+    setUpdateData(selectedInvestorData);
+    setIsEditOpen(true);
+  }
 
   return (
     <section
@@ -64,7 +76,9 @@ export default function Investor() {
                 <DeleteIcon />
               </Fab>
             </ThemeProvider>
-            <Fab>
+            <Fab
+              onClick={handleUpdateInvestor}
+            >
               <EditIcon />
             </Fab>
           </>
@@ -72,14 +86,14 @@ export default function Investor() {
         }
         <Fab
           color='primary'
-          onClick={() => setIsEditOpen(true)}
+          onClick={handleAddInvestor}
         >
           <AddIcon style={{color: '#fff'}} />
         </Fab>
         <InvestorForm 
           isOpen={isEditOpen}
           handleClose={handleCloseEdit}
-          updateData={{}}
+          updateData={updateData}
           onTrueClick={() => {}}
         />
       </div>
