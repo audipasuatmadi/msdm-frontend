@@ -14,7 +14,11 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
-import { useDepartmentData, useRolesData, useEmployeesData } from './Employees.hook';
+import {
+  useDepartmentData,
+  useRolesData,
+  useEmployeesData,
+} from './Employees.hook';
 import FormDialog from '../../components/Dialogs/FormDialog';
 import { dataColumns } from './Employees.config';
 
@@ -28,7 +32,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
 
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { Button } from '@material-ui/core';
@@ -60,28 +63,29 @@ export default function Employees() {
   const [jamKerja, setJamKerja] = useState(1);
 
   const [isRolesSet, setIsRolesSet] = useState(false);
-  const [checkedRoles, setCheckedRoles] = useState({
-
-  });
+  const [checkedRoles, setCheckedRoles] = useState({});
 
   useEffect(() => {
     setCheckedRoles(
-      roleData.reduce((prev, current) => ({
-        ...prev,
-        [current.id]: false
-      }), {})
-    )
+      roleData.reduce(
+        (prev, current) => ({
+          ...prev,
+          [current.id]: false,
+        }),
+        {}
+      )
+    );
     setTimeout(() => {
-      setIsRolesSet(true)
-    }, 2000)
-  }, [roleData])
+      setIsRolesSet(true);
+    }, 2000);
+  }, [roleData]);
 
   const handleRoleChange = (e) => {
     setCheckedRoles({
       ...checkedRoles,
-      [e.target.name]: e.target.checked
-    })
-  }
+      [e.target.name]: e.target.checked,
+    });
+  };
 
   const handleInput = (inputSetter) => (e) => inputSetter(e.target.value);
   const handleNewEmployee = async () => {
@@ -137,7 +141,6 @@ export default function Employees() {
     }
   };
 
-
   const handleDelete = async (selectedData) => {
     setData(data.filter((data) => data.id !== parseInt(selectedData[0])));
     setSelected([]);
@@ -172,86 +175,76 @@ export default function Employees() {
         return;
       }
       setSearchConfig({ params: { code: 3, name: searchedName } });
-
     } else {
-      const selectedRoleArr = []
+      const selectedRoleArr = [];
       for (let i in checkedRoles) {
         if (checkedRoles[i] === true) {
           selectedRoleArr.push(i);
         }
       }
       if (selectedRoleArr.length === 0) {
-        setSearchConfig({params: {code: 2}});
+        setSearchConfig({ params: { code: 2 } });
         return;
       }
       setSearchConfig({ params: { code: 6, roleIds: selectedRoleArr } });
     }
-  }
+  };
 
   return (
-    <section style={{ height: '105vh', position: 'relative', marginBottom: '5rem'}}>
+    <section
+      style={{ height: '105vh', position: 'relative', marginBottom: '5rem' }}
+    >
       <Card>
-        <CardHeader 
-          title="Pencarian"
-          subheader="Cari karyawan berdasarkan..."
+        <CardHeader
+          title='Pencarian'
+          subheader='Cari karyawan berdasarkan...'
         />
         <CardContent>
           <Grid container>
             <Grid item xs={12}>
               <ButtonGroup>
-                <Button onClick={()=>setSearchType('name')}>Nama</Button>
-                <Button onClick={()=>setSearchType('role')}>Jabatan</Button>
+                <Button onClick={() => setSearchType('name')}>Nama</Button>
+                <Button onClick={() => setSearchType('role')}>Jabatan</Button>
               </ButtonGroup>
             </Grid>
           </Grid>
-          <Grid style={{marginTop: '1rem'}} container>
+          <Grid style={{ marginTop: '1rem' }} container>
             <Grid item xs={12}>
-              {
-                searchType === 'name' && (
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    label="nama karyawan"
-                    value={searchedName}
-                    onChange={handleInput(setSearchedName)}
-                  >
-
-                  </TextField>
-                )
-              }
-              {
-                searchType === 'role' && (
-                  <FormControl>
-                    <FormLabel>Jabatan</FormLabel>
-                    <FormGroup>
-                      {
-                        isRolesSet && roleData.map(({id, nama}, key) => (
-                          <FormControlLabel 
-                            key={key}
-                            control={
-                              <Checkbox
-                                name={id}
-                                checked={checkedRoles[id]}
-                                onChange={handleRoleChange}
-                              />
-                            }
-                            label={nama}
-                          />
-                        ))
-                      }
-                    </FormGroup>
-                  </FormControl>
-                )
-              }
+              {searchType === 'name' && (
+                <TextField
+                  fullWidth
+                  variant='filled'
+                  label='nama karyawan'
+                  value={searchedName}
+                  onChange={handleInput(setSearchedName)}
+                ></TextField>
+              )}
+              {searchType === 'role' && (
+                <FormControl>
+                  <FormLabel>Jabatan</FormLabel>
+                  <FormGroup>
+                    {isRolesSet &&
+                      roleData.map(({ id, nama }, key) => (
+                        <FormControlLabel
+                          key={key}
+                          control={
+                            <Checkbox
+                              name={id}
+                              checked={checkedRoles[id]}
+                              onChange={handleRoleChange}
+                            />
+                          }
+                          label={nama}
+                        />
+                      ))}
+                  </FormGroup>
+                </FormControl>
+              )}
             </Grid>
           </Grid>
         </CardContent>
         <CardActions>
-          <Button 
-            color="primary"
-            variant="contained"
-            onClick={handleSearch}
-          >
+          <Button color='primary' variant='contained' onClick={handleSearch}>
             Cari
           </Button>
         </CardActions>
