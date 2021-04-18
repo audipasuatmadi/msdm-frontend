@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { useStyles } from './Employees.styles';
@@ -22,6 +22,13 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { Button } from '@material-ui/core';
@@ -51,6 +58,30 @@ export default function Employees() {
   const [nama, setNama] = useState('');
   const [gaji, setGaji] = useState(1);
   const [jamKerja, setJamKerja] = useState(1);
+
+  const [isRolesSet, setIsRolesSet] = useState(false);
+  const [checkedRoles, setCheckedRoles] = useState({
+
+  });
+
+  useEffect(() => {
+    setCheckedRoles(
+      roleData.reduce((prev, current) => ({
+        ...prev,
+        [current.id]: false
+      }), {})
+    )
+    setTimeout(() => {
+      setIsRolesSet(true)
+    }, 2000)
+  }, [roleData])
+
+  const handleRoleChange = (e) => {
+    setCheckedRoles({
+      ...checkedRoles,
+      [e.target.name]: e.target.checked
+    })
+  }
 
   const handleInput = (inputSetter) => (e) => inputSetter(e.target.value);
   const handleNewEmployee = async () => {
@@ -143,7 +174,17 @@ export default function Employees() {
       setSearchConfig({ params: { code: 3, name: searchedName } });
 
     } else {
-
+      const selectedRoleArr = []
+      for (let i in checkedRoles) {
+        if (checkedRoles[i] === true) {
+          selectedRoleArr.push(i);
+        }
+      }
+      if (selectedRoleArr.length === 0) {
+        setSearchConfig({params: {code: 2}});
+        return;
+      }
+      setSearchConfig({ params: { code: 6, roleIds: selectedRoleArr } });
     }
   }
 
@@ -176,6 +217,30 @@ export default function Employees() {
                   >
 
                   </TextField>
+                )
+              }
+              {
+                searchType === 'role' && (
+                  <FormControl>
+                    <FormLabel>Jabatan</FormLabel>
+                    <FormGroup>
+                      {
+                        isRolesSet && roleData.map(({id, nama}, key) => (
+                          <FormControlLabel 
+                            key={key}
+                            control={
+                              <Checkbox
+                                name={id}
+                                checked={checkedRoles[id]}
+                                onChange={handleRoleChange}
+                              />
+                            }
+                            label={nama}
+                          />
+                        ))
+                      }
+                    </FormGroup>
+                  </FormControl>
                 )
               }
             </Grid>
