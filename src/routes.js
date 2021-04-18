@@ -8,6 +8,7 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Investor from './pages/Investors/Investor'
+import Stakeholders from './pages/Stakeholders/Stakeholders'
 
 const routes = [
   {
@@ -20,6 +21,7 @@ const routes = [
     name: 'Stakeholders',
     icon: AssignmentIndIcon,
     route: '/stakeholders',
+    component: Stakeholders
   },
   {
     name: 'Karyawan',
