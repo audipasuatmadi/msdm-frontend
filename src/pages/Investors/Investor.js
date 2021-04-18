@@ -11,10 +11,15 @@ import Fab from '@material-ui/core/Fab'
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
+import InvestorForm from './InvestorForm';
 
 export default function Investor() {
 
   const [selectedInvestor, setSelectedInvestor] = useState(-1);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const handleCloseEdit = () => {
+    setIsEditOpen(false);
+  }
 
   const investorData = useInvestorData();
 
@@ -67,9 +72,16 @@ export default function Investor() {
         }
         <Fab
           color='primary'
+          onClick={() => setIsEditOpen(true)}
         >
           <AddIcon style={{color: '#fff'}} />
         </Fab>
+        <InvestorForm 
+          isOpen={isEditOpen}
+          handleClose={handleCloseEdit}
+          updateData={{}}
+          onTrueClick={() => {}}
+        />
       </div>
     </section>
   )
