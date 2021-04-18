@@ -14,7 +14,7 @@ export const addNewInvestor = async (investorData) => {
   }
   if (feedback);
   console.log(feedback);
-  
+
 }
 export const editInvestor = async (investorData) => {
   let feedback;
@@ -22,6 +22,21 @@ export const editInvestor = async (investorData) => {
     feedback = await Axios.post('http://localhost/msdm-backend/investors.php', {
       code: 2,
       ...investorData
+    });
+
+  } catch (e) {
+    console.log(e.response);
+  }
+  if (feedback);
+  console.log(feedback);
+}
+
+export const deleteInvestor = async (investorId) => {
+  let feedback;
+  try {
+    feedback = await Axios.post('http://localhost/msdm-backend/investors.php', {
+      code: 3,
+      id: investorId
     });
 
   } catch (e) {

@@ -12,7 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import InvestorForm from './InvestorForm';
-import { addNewInvestor, editInvestor } from './Investor.api';
+import { addNewInvestor, editInvestor, deleteInvestor } from './Investor.api';
 
 export default function Investor() {
 
@@ -47,6 +47,11 @@ export default function Investor() {
     const selectedInvestorData = investorData.filter((val) => val.id === selectedInvestor)[0];
     setUpdateData(selectedInvestorData);
     setIsEditOpen(true);
+  }
+
+  const handleDeleteInvestor = async () => {
+    await deleteInvestor(selectedInvestor);
+    setRefresh(refresh + 1);
   }
 
   return (
@@ -86,7 +91,7 @@ export default function Investor() {
             <ThemeProvider
               theme={createMuiTheme({ palette: { primary: red } })}
             >
-              <Fab color='primary'>
+              <Fab color='primary' onClick={handleDeleteInvestor}>
                 <DeleteIcon />
               </Fab>
             </ThemeProvider>
