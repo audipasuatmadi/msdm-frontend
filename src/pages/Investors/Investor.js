@@ -5,23 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import { DataGrid } from '@material-ui/data-grid';
 import { dataColumns } from './Investor.config'
-
-const mockInvestorData = [
-  {id: 1, nama: "Audi", jml_saham: 100000},
-  {id: 2, nama: "Audi", jml_saham: 100000},
-  {id: 3, nama: "Audi", jml_saham: 100000},
-  {id: 4, nama: "Audi", jml_saham: 100000},
-  {id: 5, nama: "Audi", jml_saham: 100000},
-  {id: 6, nama: "Audi", jml_saham: 100000},
-]
+import { useInvestorData } from './Investor.hook';
 
 export default function Investor() {
 
   const [selectedInvestor, setSelectedInvestor] = useState(-1);
 
-  useEffect(() => {
-    console.log(selectedInvestor);
-  }, [selectedInvestor])
+  const investorData = useInvestorData();
 
   return (
     <section
@@ -35,7 +25,7 @@ export default function Investor() {
         <CardContent>
           <DataGrid 
             columns={dataColumns}
-            rows={mockInvestorData}
+            rows={investorData}
             pageSize={5}
             disableMultipleSelection
             autoHeight
