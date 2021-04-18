@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-export const useEmployeesData = (refresh) => {
+export const useEmployeesData = (refresh, searchConfig) => {
   const [employeeData, setEmployeeData] = useState([]);
+
+  const finalSearchConfig = searchConfig ? searchConfig : { params: { code: 2 } };
+
   useEffect(() => {
     console.log('go');
     const getDatas = async () => {
@@ -10,17 +13,18 @@ export const useEmployeesData = (refresh) => {
       try {
         newDatas = await Axios.get(
           'http://localhost/msdm-backend/employees.php',
-          { params: { code: 2 } }
+          finalSearchConfig
         );
       } catch (e) {
         console.log(e);
+        setEmployeeData([]);
       }
       if (!newDatas) return;
       setEmployeeData(newDatas.data.payload);
     };
     getDatas();
     console.log('fetching')
-  }, [refresh]);
+  }, [refresh, searchConfig]);
 
   return employeeData;
 }

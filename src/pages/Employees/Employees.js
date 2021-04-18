@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { useStyles } from './Employees.styles';
@@ -18,6 +18,14 @@ import { useDepartmentData, useRolesData, useEmployeesData } from './Employees.h
 import FormDialog from '../../components/Dialogs/FormDialog';
 import { dataColumns } from './Employees.config';
 
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Button } from '@material-ui/core';
+
 export default function Employees() {
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -25,7 +33,11 @@ export default function Employees() {
   const [editDialogOpened, setEditDialogOpened] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
-  const employeeData = useEmployeesData(refresh);
+  const [searchType, setSearchType] = useState('name');
+  const [searchedName, setSearchedName] = useState('');
+  const [searchConfig, setSearchConfig] = useState({ params: { code: 2 } });
+
+  const employeeData = useEmployeesData(refresh, searchConfig);
 
   const classes = useStyles();
 
@@ -122,11 +134,67 @@ export default function Employees() {
     }
   };
 
+  const handleSearch = () => {
+    if (searchType === 'name') {
+      if (searchedName === '') {
+        setSearchConfig({ params: { code: 2 } });
+        return;
+      }
+      setSearchConfig({ params: { code: 3, name: searchedName } });
+
+    } else {
+
+    }
+  }
+
   return (
-    <section style={{ height: '75vh', position: 'relative' }}>
+    <section style={{ height: '105vh', position: 'relative', marginBottom: '5rem'}}>
+      <Card>
+        <CardHeader 
+          title="Pencarian"
+          subheader="Cari karyawan berdasarkan..."
+        />
+        <CardContent>
+          <Grid container>
+            <Grid item xs={12}>
+              <ButtonGroup>
+                <Button onClick={()=>setSearchType('name')}>Nama</Button>
+                <Button onClick={()=>setSearchType('role')}>Jabatan</Button>
+              </ButtonGroup>
+            </Grid>
+          </Grid>
+          <Grid style={{marginTop: '1rem'}} container>
+            <Grid item xs={12}>
+              {
+                searchType === 'name' && (
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    label="nama karyawan"
+                    value={searchedName}
+                    onChange={handleInput(setSearchedName)}
+                  >
+
+                  </TextField>
+                )
+              }
+            </Grid>
+          </Grid>
+        </CardContent>
+        <CardActions>
+          <Button 
+            color="primary"
+            variant="contained"
+            onClick={handleSearch}
+          >
+            Cari
+          </Button>
+        </CardActions>
+      </Card>
       <div
         style={{
           height: 400,
+          marginTop: 10,
           boxShadow:
             '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
           position: 'relative',
@@ -144,12 +212,12 @@ export default function Employees() {
       </div>
       <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           display: 'flex',
           flexDirection: 'row',
           gap: '1rem',
-          bottom: 0,
-          right: 0,
+          bottom: '5rem',
+          right: '5rem',
         }}
       >
         {selected.length === 1 && (
