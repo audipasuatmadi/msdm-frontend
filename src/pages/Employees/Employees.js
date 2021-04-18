@@ -34,8 +34,10 @@ export default function Employees() {
   const [refresh, setRefresh] = useState(1);
 
   const [searchType, setSearchType] = useState('name');
+  const [searchedName, setSearchedName] = useState('');
+  const [searchConfig, setSearchConfig] = useState({ params: { code: 2 } });
 
-  const employeeData = useEmployeesData(refresh);
+  const employeeData = useEmployeesData(refresh, searchConfig);
 
   const classes = useStyles();
 
@@ -132,6 +134,19 @@ export default function Employees() {
     }
   };
 
+  const handleSearch = () => {
+    if (searchType === 'name') {
+      if (searchedName === '') {
+        setSearchConfig({ params: { code: 2 } });
+        return;
+      }
+      setSearchConfig({ params: { code: 3, name: searchedName } });
+
+    } else {
+
+    }
+  }
+
   return (
     <section style={{ height: '105vh', position: 'relative', marginBottom: '5rem'}}>
       <Card>
@@ -156,6 +171,8 @@ export default function Employees() {
                     fullWidth
                     variant="filled"
                     label="nama karyawan"
+                    value={searchedName}
+                    onChange={handleInput(setSearchedName)}
                   >
 
                   </TextField>
@@ -168,6 +185,7 @@ export default function Employees() {
           <Button 
             color="primary"
             variant="contained"
+            onClick={handleSearch}
           >
             Cari
           </Button>
