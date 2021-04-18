@@ -4,7 +4,6 @@ import Axios from 'axios';
 export const useEmployeesData = (refresh, searchConfig) => {
   const [employeeData, setEmployeeData] = useState([]);
 
-  
   useEffect(() => {
     const finalSearchConfig = searchConfig
     ? searchConfig
