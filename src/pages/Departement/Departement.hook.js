@@ -24,9 +24,3 @@ export const useDepartmentData = () => {
 
   return departmentData;
 };
-
-export const handleEditDepartment = async () => {
-  // const shippingData = {
-  //   id: 
-  // }
-};
