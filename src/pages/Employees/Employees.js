@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { DataGrid } from '@material-ui/data-grid';
 import { useStyles } from './Employees.styles';
@@ -14,9 +14,27 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
-import { useDepartmentData, useRolesData, useEmployeesData } from './Employees.hook';
+import {
+  useDepartmentData,
+  useRolesData,
+  useEmployeesData,
+} from './Employees.hook';
 import FormDialog from '../../components/Dialogs/FormDialog';
 import { dataColumns } from './Employees.config';
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { Button } from '@material-ui/core';
 
 export default function Employees() {
   const [data, setData] = useState([]);
@@ -25,7 +43,11 @@ export default function Employees() {
   const [editDialogOpened, setEditDialogOpened] = useState(false);
   const [refresh, setRefresh] = useState(1);
 
-  const employeeData = useEmployeesData(refresh);
+  const [searchType, setSearchType] = useState('name');
+  const [searchedName, setSearchedName] = useState('');
+  const [searchConfig, setSearchConfig] = useState({ params: { code: 2 } });
+
+  const employeeData = useEmployeesData(refresh, searchConfig);
 
   const classes = useStyles();
 
@@ -39,6 +61,31 @@ export default function Employees() {
   const [nama, setNama] = useState('');
   const [gaji, setGaji] = useState(1);
   const [jamKerja, setJamKerja] = useState(1);
+
+  const [isRolesSet, setIsRolesSet] = useState(false);
+  const [checkedRoles, setCheckedRoles] = useState({});
+
+  useEffect(() => {
+    setCheckedRoles(
+      roleData.reduce(
+        (prev, current) => ({
+          ...prev,
+          [current.id]: false,
+        }),
+        {}
+      )
+    );
+    setTimeout(() => {
+      setIsRolesSet(true);
+    }, 2000);
+  }, [roleData]);
+
+  const handleRoleChange = (e) => {
+    setCheckedRoles({
+      ...checkedRoles,
+      [e.target.name]: e.target.checked,
+    });
+  };
 
   const handleInput = (inputSetter) => (e) => inputSetter(e.target.value);
   const handleNewEmployee = async () => {
@@ -94,9 +141,8 @@ export default function Employees() {
     }
   };
 
-
   const handleDelete = async (selectedData) => {
-    setData(data.filter((data) => data.id !== parseInt(selectedData[0])));
+    setData(data.filter((useEmployeesData) => useEmployeesData.id !== parseInt(selectedData[0])));
     setSelected([]);
 
     const shippingData = {
@@ -122,11 +168,91 @@ export default function Employees() {
     }
   };
 
+  const handleSearch = () => {
+    if (searchType === 'name') {
+      if (searchedName === '') {
+        setSearchConfig({ params: { code: 2 } });
+        return;
+      }
+      setSearchConfig({ params: { code: 3, name: searchedName } });
+    } else {
+      const selectedRoleArr = [];
+      for (let i in checkedRoles) {
+        if (checkedRoles[i] === true) {
+          selectedRoleArr.push(i);
+        }
+      }
+      if (selectedRoleArr.length === 0) {
+        setSearchConfig({ params: { code: 2 } });
+        return;
+      }
+      setSearchConfig({ params: { code: 6, roleIds: selectedRoleArr } });
+    }
+  };
+
   return (
-    <section style={{ height: '75vh', position: 'relative' }}>
+    <section
+      style={{ height: '105vh', position: 'relative', marginBottom: '5rem' }}
+    >
+      <Card>
+        <CardHeader
+          title='Pencarian'
+          subheader='Cari karyawan berdasarkan...'
+        />
+        <CardContent>
+          <Grid container>
+            <Grid item xs={12}>
+              <ButtonGroup>
+                <Button onClick={() => setSearchType('name')}>Nama</Button>
+                <Button onClick={() => setSearchType('role')}>Jabatan</Button>
+              </ButtonGroup>
+            </Grid>
+          </Grid>
+          <Grid style={{ marginTop: '1rem' }} container>
+            <Grid item xs={12}>
+              {searchType === 'name' && (
+                <TextField
+                  fullWidth
+                  variant='filled'
+                  label='nama karyawan'
+                  value={searchedName}
+                  onChange={handleInput(setSearchedName)}
+                ></TextField>
+              )}
+              {searchType === 'role' && (
+                <FormControl>
+                  <FormLabel>Jabatan</FormLabel>
+                  <FormGroup>
+                    {isRolesSet &&
+                      roleData.map(({ id, nama }, key) => (
+                        <FormControlLabel
+                          key={key}
+                          control={
+                            <Checkbox
+                              name={id}
+                              checked={checkedRoles[id]}
+                              onChange={handleRoleChange}
+                            />
+                          }
+                          label={nama}
+                        />
+                      ))}
+                  </FormGroup>
+                </FormControl>
+              )}
+            </Grid>
+          </Grid>
+        </CardContent>
+        <CardActions>
+          <Button color='primary' variant='contained' onClick={handleSearch}>
+            Cari
+          </Button>
+        </CardActions>
+      </Card>
       <div
         style={{
           height: 400,
+          marginTop: 10,
           boxShadow:
             '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
           position: 'relative',
@@ -144,12 +270,12 @@ export default function Employees() {
       </div>
       <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           display: 'flex',
           flexDirection: 'row',
           gap: '1rem',
-          bottom: 0,
-          right: 0,
+          bottom: '5rem',
+          right: '5rem',
         }}
       >
         {selected.length === 1 && (
@@ -163,8 +289,8 @@ export default function Employees() {
             </ThemeProvider>
             <Fab
               onClick={() => {
-                const selectedData = data.filter(
-                  (data) => data.id === parseInt(selected[0])
+                const selectedData = employeeData.filter(
+                  (employeeData) => employeeData.id === parseInt(selected[0])
                 )[0];
                 setDataId(selectedData.id);
                 setNama(selectedData.nama);

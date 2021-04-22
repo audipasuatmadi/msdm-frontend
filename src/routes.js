@@ -8,6 +8,8 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Departemen from './pages/Departement/Departement'
+import Investor from './pages/Investors/Investor'
+import Stakeholders from './pages/Stakeholders/Stakeholders'
 
 const routes = [
   {
@@ -20,6 +22,7 @@ const routes = [
     name: 'Stakeholders',
     icon: AssignmentIndIcon,
     route: '/stakeholders',
+    component: Stakeholders
   },
   {
     name: 'Karyawan',
@@ -43,6 +46,7 @@ const routes = [
     name: 'Investor',
     icon: MonetizationOnIcon,
     route: '/investors',
+    component: Investor
   },
   {
     name: 'Tentang Kami',

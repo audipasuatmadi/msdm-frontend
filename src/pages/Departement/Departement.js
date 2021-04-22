@@ -30,8 +30,8 @@ export default function Departemen() {
   const handleInput = (inputSetter) => (e) => inputSetter(e.target.value);
   const handleNewDepartement = async () => {
     const shippingData = {
-      nama : nama,
-      deskripsi : deskripsi,
+      name: nama,
+      description: deskripsi,
     };
     let feedback;
     try {
@@ -55,7 +55,7 @@ export default function Departemen() {
     const shippingData = {
       id : dataId,
       nama : nama,
-      deskripsi : deskripsi,
+      description : deskripsi,
     };
     let feedback;
     try {
@@ -76,13 +76,13 @@ export default function Departemen() {
   };
 
   const handleDelete = async (selectedData) => {
-    setData(data.filter((data) => data.id !== parseInt(selectedData)));
+    setData(departemenData.filter((departemenData) => departemenData.id !== parseInt(selectedData[0])));
     setSelected([]);
 
-    
     const shippingData = {
       id: parseInt(selectedData[0]),
     };
+    console.log(shippingData);
 
     let feedback;
 
@@ -97,8 +97,6 @@ export default function Departemen() {
     } catch (e) {
       console.log(e);
     }
-    console.log(selected);
-    console.log("TESTTTT");
     if (feedback) {
       console.log(feedback);
       setRefresh(refresh+1);
@@ -146,12 +144,13 @@ export default function Departemen() {
             </ThemeProvider>
             <Fab
               onClick={() => {
-                const selectedData = data.filter(
-                  (data) => data.id === parseInt(selected[0])
+                const selectedData = departemenData.filter(
+                  (departemenData) => departemenData.id === parseInt(selected[0])
                 )[0];
                 setDataId(selectedData.id);
                 setNama(selectedData.nama);
                 setDeskripsi(selectedData.deskripsi);
+                setEditDialogOpened(true);
               }}
             >
               <EditIcon />
@@ -175,7 +174,7 @@ export default function Departemen() {
           title="Tambahkan Departemen Baru"
           text="Tambahkan Departemen yang baru dengan cara mengisi form dibawah."
           onTrueClick={() => {
-            if (dialogOpened) handleNewDepartement();
+            if (dialogOpened) handleNewDepartement(refresh);
             if (editDialogOpened) handleEditDepartement();
           }}
         >
