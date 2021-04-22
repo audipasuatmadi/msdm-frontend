@@ -76,7 +76,7 @@ export default function Departemen() {
   };
 
   const handleDelete = async (selectedData) => {
-    setData(departemenData.filter((departemenData) => departemenData.id !== parseInt(selectedData[0])));
+    setData(departemenData.filter((useDepartmentData) => useDepartmentData.id !== parseInt(selectedData[0])));
     setSelected([]);
 
     const shippingData = {
