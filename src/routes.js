@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Departemen from './pages/Departement/Departement'
 import Investor from './pages/Investors/Investor'
 import Stakeholders from './pages/Stakeholders/Stakeholders'
+import Roles from './pages/Roles/Roles';
 
 const routes = [
   {
@@ -41,12 +42,13 @@ const routes = [
     name: 'Jabatan',
     icon: LockIcon,
     route: '/roles',
+    component: Roles,
   },
   {
     name: 'Investor',
     icon: MonetizationOnIcon,
     route: '/investors',
-    component: Investor
+    component: Investor,
   },
   {
     name: 'Tentang Kami',
