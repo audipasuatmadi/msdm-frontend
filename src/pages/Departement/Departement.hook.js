@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-export const useDepartmentData = () => {
+export const useDepartmentData = (refresh) => {
   const [departmentData, setDepartmentData] = useState([]);
   useEffect(() => {
     console.log('go');
@@ -20,7 +20,7 @@ export const useDepartmentData = () => {
       setDepartmentData(newDatas.data.payload);
     };
     getDatas();
-  }, []);
+  }, [refresh]);
 
   return departmentData;
 };

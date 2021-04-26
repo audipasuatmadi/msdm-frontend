@@ -1,16 +1,15 @@
 import { Card, CardContent, CardHeader, createMuiTheme, Fab, ThemeProvider } from "@material-ui/core";
-import { DataGrid, visibleGridColumnsLengthSelector } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { useState } from "react";
-import { dataColumns } from "../Investors/Investor.config";
-import { rolesApi } from "./Roles.api";
+import { dataColums } from './Roles.config'
 import { useRolesData } from "./Roles.hook";
-import RolesForm from "./RolesForm";
 import { red } from "@material-ui/core/colors";
-import { editInvestor } from "../Investors/Investor.api";
+import { addNewRoles, deleteRoles, editRoles } from "./Roles.api";
+import RolesForm from "./RolesForm";
 
 export default function Roles() {
 
@@ -24,12 +23,12 @@ export default function Roles() {
 
   const rolesData = useRolesData(refresh);
 
-  const handleChooseClick = ({id, ...FormData}) => async () => {
+  const handleChooseClick = ({id, ...formData}) => async () => {
     if (id === 0) {
-      await rolesApi(FormData, 1);
+      await addNewRoles(formData);
       setRefresh(refresh+1);
     } else {
-      await editInvestor({id, ...FormData});
+      await editRoles({id, ...formData});
       setRefresh(refresh+1);
     }
   }
@@ -46,7 +45,7 @@ export default function Roles() {
   }
 
   const handleDeleteRoles = async () => {
-    await rolesApi(selectedRoles , 3);
+    await deleteRoles(selectedRoles);
     setRefresh(refresh + 1);
   }
 
@@ -56,12 +55,12 @@ export default function Roles() {
     >
       <Card>
         <CardHeader 
-          title="Investor"
+          title="Jabatan"
           subheader="Tabel dan data - data jabatan"
         />
         <CardContent>
           <DataGrid 
-            columns={dataColumns}
+            columns={dataColums}
             rows={rolesData}
             pageSize={5}
             disableMultipleSelection
@@ -83,20 +82,20 @@ export default function Roles() {
       >
         {
           selectedRoles !== -1 && (
-            <>
-              <ThemeProvider
-                theme={createMuiTheme({ palette: { primary: red } })}
-              >
-                <Fab color="primary" onClick={handleDeleteRoles} >
-                  <DeleteIcon />
-                </Fab>
-              </ThemeProvider>
-              <Fab
-                onClick={handleUpdateRoles}
-              >
-                <EditIcon />
+          <>
+            <ThemeProvider
+              theme={createMuiTheme({ palette: { primary: red } })}
+            >
+              <Fab color="primary" onClick={handleDeleteRoles}>
+                <DeleteIcon />
               </Fab>
-            </>
+            </ThemeProvider>
+            <Fab
+              onClick={handleUpdateRoles}
+            >
+              <EditIcon />
+            </Fab>
+          </>
           )
         }
         <Fab

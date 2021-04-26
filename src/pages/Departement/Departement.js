@@ -47,14 +47,14 @@ export default function Departemen() {
     }
     if (feedback) {
       console.log(feedback);
-      setRefresh(refresh+1);
+      setRefresh(refresh + 1);
     }
   };
   
   const handleEditDepartement = async () => {
     const shippingData = {
       id : dataId,
-      nama : nama,
+      name : nama,
       description : deskripsi,
     };
     let feedback;
@@ -71,7 +71,7 @@ export default function Departemen() {
     }
     if (feedback) {
       console.log(feedback);
-      setRefresh(refresh+1);
+      setRefresh(refresh + 1);
     }
   };
 
@@ -99,7 +99,7 @@ export default function Departemen() {
     }
     if (feedback) {
       console.log(feedback);
-      setRefresh(refresh+1);
+      setRefresh(refresh + 1);
     }
   };
 

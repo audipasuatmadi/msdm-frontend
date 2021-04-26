@@ -29,7 +29,7 @@ export default function RolesForm({
   return (
     <FormDialog
       open={isOpen}
-      handleChange={() => handleClose()}
+      handleClose={() => handleClose()}
       title="Tambah Jabatan"
       text="Tambahkan Jabatan baru, Pastikan nama yang akan ditambahkan benar :)"
       onTrueClick={onTrueClick({
