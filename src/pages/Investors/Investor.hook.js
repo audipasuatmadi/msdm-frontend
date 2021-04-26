@@ -20,7 +20,7 @@ export const useInvestorData = (refresh) => {
         setInvestorData([]);
       }
       if (!newDatas) return;
-      setInvestorData(newDatas.data);
+        setInvestorData(newDatas.data);
     };
     getDatas();
   }, [refresh]);

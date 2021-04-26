@@ -142,7 +142,7 @@ export default function Employees() {
   };
 
   const handleDelete = async (selectedData) => {
-    setData(data.filter((data) => data.id !== parseInt(selectedData[0])));
+    setData(data.filter((useEmployeesData) => useEmployeesData.id !== parseInt(selectedData[0])));
     setSelected([]);
 
     const shippingData = {
@@ -289,8 +289,8 @@ export default function Employees() {
             </ThemeProvider>
             <Fab
               onClick={() => {
-                const selectedData = data.filter(
-                  (data) => data.id === parseInt(selected[0])
+                const selectedData = employeeData.filter(
+                  (employeeData) => employeeData.id === parseInt(selected[0])
                 )[0];
                 setDataId(selectedData.id);
                 setNama(selectedData.nama);

@@ -7,8 +7,10 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Employees from './pages/Employees/Employees';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Departemen from './pages/Departement/Departement'
 import Investor from './pages/Investors/Investor'
 import Stakeholders from './pages/Stakeholders/Stakeholders'
+import Roles from './pages/Roles/Roles';
 
 const routes = [
   {
@@ -34,17 +36,19 @@ const routes = [
     name: 'Departemen',
     icon: AccountBalance,
     route: '/departments',
+    component : Departemen,
   },
   {
     name: 'Jabatan',
     icon: LockIcon,
     route: '/roles',
+    component: Roles,
   },
   {
     name: 'Investor',
     icon: MonetizationOnIcon,
     route: '/investors',
-    component: Investor
+    component: Investor,
   },
   {
     name: 'Tentang Kami',
