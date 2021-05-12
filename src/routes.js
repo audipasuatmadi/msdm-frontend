@@ -48,7 +48,7 @@ const routes = [
     name: 'Investor',
     icon: MonetizationOnIcon,
     route: '/investors',
-    component: Investor,
+    component: Investor
   },
   {
     name: 'Tentang Kami',

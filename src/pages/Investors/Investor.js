@@ -13,6 +13,16 @@ import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import InvestorForm from './InvestorForm';
 import { addNewInvestor, editInvestor, deleteInvestor } from './Investor.api';
+import CardActions from '@material-ui/core/CardActions';
+
+const mockInvestorData = [
+  {id: 1, nama: "Audi", jml_saham: 100000},
+  {id: 2, nama: "Audi", jml_saham: 100000},
+  {id: 3, nama: "Audi", jml_saham: 100000},
+  {id: 4, nama: "Audi", jml_saham: 100000},
+  {id: 5, nama: "Audi", jml_saham: 100000},
+  {id: 6, nama: "Audi", jml_saham: 100000},
+]
 
 export default function Investor() {
 
