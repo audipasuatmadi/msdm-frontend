@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-export const useJobCountData = (min) => {
+export const useJobCountData = (min, max) => {
   const [jobCounts, setJobCounts] = useState([]);
 
   useEffect(() => {
@@ -14,17 +14,19 @@ export const useJobCountData = (min) => {
             params: {
               code: 5,
               min: min ? min : 0,
+              max: max ? max : 1000
             },
           }
         );
+        console.log(max, fetchedData)
       } catch (e) {
-        console.log(e);
+        console.log(e.response);
       }
       if (!fetchedData) return setJobCounts([]);
       setJobCounts(fetchedData.data.payload);
     };
     fetchDatas();
-  }, [min]);
+  }, [min, max]);
 
   return jobCounts;
 };

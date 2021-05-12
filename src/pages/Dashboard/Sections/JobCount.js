@@ -11,9 +11,11 @@ import { useJobCountData } from '../Dashboard.api';
 
 export default function JobCount() {
   const [minJob, setMinJob] = useState(0);
+  const [maxJob, setMaxJob] = useState(100);
   const [inputMinJob, setInputMinJob] = useState(0);
+  const [inputMaxJob, setInputMaxJob] = useState(100);
 
-  const jobCounts = useJobCountData(minJob);
+  const jobCounts = useJobCountData(minJob, maxJob);
 
   return (
     <>
@@ -58,10 +60,20 @@ export default function JobCount() {
               value={inputMinJob}
               onChange={(e) => setInputMinJob(e.target.value)}
             />
+            <TextField
+              label='maximum'
+              type='number'
+              color='primary'
+              size='small'
+              variant='filled'
+              value={inputMaxJob}
+              onChange={(e) => setInputMaxJob(e.target.value)}
+            />
             <Button
               color='primary'
               onClick={() => {
                 setMinJob(inputMinJob);
+                setMaxJob(inputMaxJob);
               }}
             >
               Atur
