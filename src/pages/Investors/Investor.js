@@ -63,6 +63,7 @@ export default function Investor() {
     await deleteInvestor(selectedInvestor);
     setRefresh(refresh + 1);
   }
+  const investorData = useInvestorData();
 
   return (
     <section
