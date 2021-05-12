@@ -14,7 +14,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import InvestorForm from './InvestorForm';
 import { addNewInvestor, editInvestor, deleteInvestor } from './Investor.api';
 
-
 export default function Investor() {
 
   const [selectedInvestor, setSelectedInvestor] = useState(-1);
