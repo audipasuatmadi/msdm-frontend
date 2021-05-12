@@ -14,7 +14,6 @@ export const addNewInvestor = async (investorData) => {
   }
   if (feedback);
   console.log(feedback);
-
 }
 export const editInvestor = async (investorData) => {
   let feedback;
