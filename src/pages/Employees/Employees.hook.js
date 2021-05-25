@@ -10,6 +10,7 @@ export const useEmployeesData = (refresh, searchConfig) => {
 
   useEffect(() => {
     console.log('go');
+    // Kelompok E2 Prak Basdat 2021
     const getDatas = async () => {
       let newDatas;
       try {
