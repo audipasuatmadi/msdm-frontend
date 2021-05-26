@@ -98,7 +98,7 @@ export default function About() {
           </Grid>
           <Grid xs item>
             <ProfileCard
-              imageName='abhira.PNG'
+              imageName='agungde.jpg'
               name='I Gusti Agung Gde Abhirama Adnyana'
               subtitle='BPM FMIPA'
               roles={[
