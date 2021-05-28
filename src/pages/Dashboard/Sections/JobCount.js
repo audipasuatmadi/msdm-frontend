@@ -23,7 +23,6 @@ export default function JobCount() {
         <Card elevation={1}>
           <CardHeader
             title='Jumlah Karyawan per Jabatan'
-            subheader='Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi hic placeat, architecto rerum porro qui exercitationem labore a, deleniti perferendis vero consectetur fugit officiis voluptatum omnis in. Distinctio, debitis quas?'
             titleTypographyProps={{ variant: 'h6', component: 'h1' }}
             subheaderTypographyProps={{ variant: 'subtitle2' }}
           />
