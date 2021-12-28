@@ -10,7 +10,6 @@ import Departemen from './pages/Departement/Departement';
 import Investor from './pages/Investors/Investor';
 import Stakeholders from './pages/Stakeholders/Stakeholders';
 import Roles from './pages/Roles/Roles';
-import About from './pages/About/About';
 
 const routes = [
   {
